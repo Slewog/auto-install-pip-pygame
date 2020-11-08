@@ -43,7 +43,7 @@ def check_pygame_install():
 				if sys.platform == "linux":
 					subprocess.run(PYGAME_INSTALL_LINUX, shell=True)
 				#elif sys.platform == "win32":
-					s#ubprocess.run(PYGAME_INSTALL_WIN32, shell=True)
+					#subprocess.run(PYGAME_INSTALL_WIN32, shell=True)
 				print("[INSTALLATION] Pygame has been installed")
 				pygame_installed = False
 				import pygame
