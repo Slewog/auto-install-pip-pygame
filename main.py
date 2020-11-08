@@ -44,9 +44,9 @@ def check_pygame_install():
 					subprocess.run(PYGAME_INSTALL_LINUX, shell=True)
 				#elif sys.platform == "win32":
 					#subprocess.run(PYGAME_INSTALL_WIN32, shell=True)
+				import pygame
 				print("[INSTALLATION] Pygame has been installed")
 				pygame_installed = False
-				import pygame
 				
 			except:
 				print("[EXCEPTION] Pip and module not installed on system")
@@ -61,8 +61,9 @@ def check_pygame_install():
 						subprocess.run(PYGAME_INSTALL_LINUX, shell=True)
 					#elif sys.platform == "win32":
 						#subprocess.run(PYGAME_INSTALL_WIN32, shell=True)
-					print("[INSTALLATION] Pygame has been installed")
 					import pygame
+					print("[INSTALLATION] Pygame has been installed")
+					pygame_installed = False
 				except:
 					print("[ERROR 1] Pygame could not be installed")
 
