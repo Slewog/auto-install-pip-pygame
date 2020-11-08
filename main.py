@@ -2,15 +2,14 @@
 import subprocess, sys, get_pip, os
 
 
-#subprocess.call([sys.executable, "-m", "pip", "install", "--upgrade"])
-
 def update_module():
 	if sys.platform == 'linux':
 		subprocess.run("pip3 install -U pip", shell=True)
 		print("update ok")
-	#elif sys.platform == 'win32':
-		#subprocess.run("python -m pip install -U pip", shell=True)
+	elif sys.platform == 'win32':
+		subprocess.run("python -m pip install -U pip", shell=True)
 
+		
 def check_pygame():
 	try:
 		print("[GAME] Trying to import pygame")
