@@ -10,11 +10,14 @@ def check_pygame_install():
 	#TKINTER_INSTALL_LINUX = "sudo apt-get install python3-tk" # "sudo apt-get remove python3-tk"
 
 	def update_module():
-		if sys.platform == 'linux':
-			subprocess.run("python3 -m pip install -U pip", shell=True)
-		#elif sys.platform == 'win32':
-			#subprocess.run("python -m pip install -U pip", shell=True)
-		print("[UPDATE] Pip has been updated")
+		try:
+			if sys.platform == 'linux':
+				subprocess.run("python3 -m pip install -U pip", shell=True)
+			#elif sys.platform == 'win32':
+				#subprocess.run("python -m pip install -U pip", shell=True)
+			print("[UPDATE] Pip has been updated")
+		except:
+			print("[UPDATE] Pip has not been updated")
 
 	def secondary_module():
 		subprocess.run("pip3 install setuptools", shell=True)
