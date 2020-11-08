@@ -1,4 +1,4 @@
-# === auto install pip-pygame ===
+# === auto installation for pip-pygame ===
 
 # 1 Install the necessary libraries:
 - Install pygame library and update pip
