@@ -45,9 +45,9 @@ class CheckRequiredModules:
                 subprocess.run(self.pip_update_win32, shell=True)
                 subprocess.run(self.setuptools_install_win32, shell=True)
                 subprocess.run(self.wheel_update_win32, shell=True)
-            print("[UPDATE] Pip has been updated")
+            print("[UPDATE] Your python modules has been updated")
         except:
-            print("[UPDATE] Pip has not been updated")
+            print("[UPDATE ERROR] Your python modules has not been updated")
 
         #try:
             #print("[UPDATE] Trying to update pygame")
@@ -143,12 +143,3 @@ class CheckRequiredModules:
                         print("[INSTALLATION ERROR] pygame could not be installed")
                 except:
                     print("[INSTALLATION ERROR] Pip could not be installed")
-
-
-#check = CheckRequiredModules()
-#check.pygame_check()
-#check.tkinter_check()
-#if check.pygame_is_installed and check.tkinter_is_installed:
-    #check.modules_update()
-
-# input("Update finish, press any key to exit.")
