@@ -3,9 +3,6 @@ import subprocess
 import sys
 import os
 
-# for /F "delims= " %i in ('pip3 list -o') do pip3 install -U %i
-# for /F "delims= " %i in ('pip list --outdated --user') do pip install -U %i
-
 
 class CheckRequiredModules:
     def __init__(self):
@@ -13,7 +10,7 @@ class CheckRequiredModules:
         self.tkinter_is_installed = True
         self.win32_error = "[EXCEPTION] Windows system operating is executing."
         self.modules_update_linux_1 = "python3 -m pip list -o > outdated"
-        self.modules_update_linux_2= "for x in $(sed -n '3,$p' outdated | awk '{print $1}'); do python3 -m pip install -U $x; done"
+        self.modules_update_linux_2 = "for x in $(sed -n '3,$p' outdated  awk '{print $1}'); do python3 -m pip install -U $x; done"
         self.tkinter_install_linux = "sudo apt-get install python3-tk"  # "sudo apt-get remove python3-tk"
         self.tcl_install_linux = "sudo apt-get install tcl"  # " pip install Tcl"
         self.pip_update_linux = "python3 -m pip install -U pip"
@@ -21,50 +18,43 @@ class CheckRequiredModules:
         self.pip_update_win32 = "python -m pip install -U pip"
         self.pip_install_win32 = "python get-pip.py"
         self.wheel_install_linux = "python3 -m pip install wheel"
-        #self.wheel_update_linux = "python3 -m pip install wheel -U"
         self.wheel_install_win32 = "python -m pip install wheel"
-        self.wheel_update_win32 = "python -m pip install wheel -U"
         self.setuptools_install_linux = "python3 -m pip install setuptools"
-        #self.setuptools_update_linux = "python3 -m pip install setuptools -U"
         self.setuptools_install_win32 = "python -m pip install setuptools"
-        self.setuptools_update_win32 = "python -m pip install setuptools -U"
         self.pygame_install_linux = "python3 -m pip install pygame"  # pip3 uninstall pygame
-        #self.pygame_update_linux = "python3 -m pip install pygame -U"
         self.pygame_install_win32 = "pip install pygame"
-        self.pygame_update_win32 = "python -m pip install pygame -U"
 
     def modules_update(self):
         try:
-            print("[UPDATE] Trying to update pip")
+            print("[UPDATE] Trying to update pip module")
             if sys.platform == 'linux':
                 subprocess.run(self.pip_update_linux, shell=True)
+                print("[UPDATE] Trying to update other modules")
                 subprocess.run(self.modules_update_linux_1, shell=True)
                 subprocess.run(self.modules_update_linux_2, shell=True)
                 try:
                     os.remove(r"outdated")
                 except OSError as e:
-                    print(e)
-                else:
-                    print("file is deleted")
-                #subprocess.run(self.setuptools_update_linux, shell=True)
-                #subprocess.run(self.wheel_update_linux, shell=True)
+                    print('[ERROR] the file "outdated" does not exist.')
             elif sys.platform == 'win32':
                 subprocess.run(self.pip_update_win32, shell=True)
-                subprocess.run(self.setuptools_install_win32, shell=True)
-                subprocess.run(self.wheel_update_win32, shell=True)
+                print("[UPDATE] Trying to update other modules")
+                subprocess.run("python -m pip list -o > outdated", shell=True)
+                f = open("outdated", "r")
+                module_list = f.readlines()
+                f.close()
+                module_list.pop(0), module_list.pop(0)
+                for module in module_list:
+                    module_list = module.replace("  ", ",")
+                    module_list = list(module_list.split(","))
+                    subprocess.run("python -m pip install " + module_list[0] + " -U", shell=True)
+                try:
+                    os.remove(r"outdated")
+                except OSError as e:
+                    print('[ERROR] the file "outdated" does not exist.')
             print("[UPDATE] Your python modules has been updated")
         except:
             print("[UPDATE ERROR] Your python modules has not been updated")
-
-        #try:
-            #print("[UPDATE] Trying to update pygame")
-            #if sys.platform == 'linux':
-                #subprocess.run(self.pygame_update_linux, shell=True)
-            #elif sys.platform == 'win32':
-                #subprocess.run(self.pygame_update_win32, shell=True)
-            #print("[UPDATE] Pygame has been updated")
-        #except:
-            #print("[UPDATE] Pygame has not been updated")
 
     def pip_install(self):
         print("[INSTALLATION] Trying to install pip")
