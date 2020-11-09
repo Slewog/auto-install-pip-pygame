@@ -1,6 +1,7 @@
 #! /usr/bin/python3
 import subprocess
 import sys
+import os
 
 # for /F "delims= " %i in ('pip3 list -o') do pip3 install -U %i
 # for /F "delims= " %i in ('pip list --outdated --user') do pip install -U %i
@@ -39,6 +40,12 @@ class CheckRequiredModules:
                 subprocess.run(self.pip_update_linux, shell=True)
                 subprocess.run(self.modules_update_linux_1, shell=True)
                 subprocess.run(self.modules_update_linux_2, shell=True)
+                try:
+                    os.remove(r"outdated")
+                except OSError as e:
+                    print(e)
+                else:
+                    print("file is deleted")
                 #subprocess.run(self.setuptools_update_linux, shell=True)
                 #subprocess.run(self.wheel_update_linux, shell=True)
             elif sys.platform == 'win32':
